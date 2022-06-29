@@ -93,6 +93,14 @@ void CC1101Protocol::rxTxDemo(void){
       for(int i  = 0; i<10 && !received; i++){
           if(receiveByte()){
               received = true;
+              for(int i = 0; i < sizeof(simpleCommunication) && received; i++){
+                  Serial.println(buffer[i]);
+                  if(buffer[i] != simpleCommunication[i]){
+                      received = false;
+                  }else{
+                    signalIndicator.receive();
+                  }
+              }
           }
       }
       delay(100);
